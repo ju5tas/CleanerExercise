@@ -9,7 +9,7 @@ import java.io.InputStream;
  */
 public class Application {
 
-    public static final String fileName = "C:\\Projects\\Parser\\src\\com\\luxoft\\spanov\\cleaner\\Application.java";
+    public static final String fileName = "C:\\Projects\\Parser\\src\\ju5tas\\cleaner\\Application.java";
     //= "C:\\test.txt";
 
     /**

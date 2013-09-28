@@ -20,6 +20,11 @@ public abstract class AbstractStateHandler implements StateHandler {
         return state;
     }
 
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + " " + state.toString();
+    }
+
     protected static void changeState(DoubleState doubleState, State state) {
         doubleState.previous = doubleState.current;
         doubleState.current = state;
