@@ -17,11 +17,12 @@ public class Application {
      */
     public static void main(String[] args) {
 
-        String text = null;
+        String text;
         try {
             text = readFile();
         } catch (IOException e) {
-            text = "";
+            System.out.println(e.getMessage());
+            return;
         }
         int a = 6 / 3 * 2;
         System.out.println(text + "\n--------");
