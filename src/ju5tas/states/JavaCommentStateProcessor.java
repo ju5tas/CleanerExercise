@@ -3,11 +3,17 @@ package ju5tas.states;
 import ju5tas.states.handlers.CustomStateHandler;
 import ju5tas.states.handlers.StateHandler;
 
-public class JavaCommentStateProcessor {
+public class JavaCommentStateProcessor extends StateProcessor {
 
-    private StateHandler handler;
+    private boolean quoteSupport;
 
     public JavaCommentStateProcessor(boolean quoteSupport) {
+        super();
+        this.quoteSupport = quoteSupport;
+    }
+
+    @Override
+    public StateHandler configure() {
         CustomStateHandler text = new CustomStateHandler();
         CustomStateHandler multi = new CustomStateHandler();
         CustomStateHandler aster = new CustomStateHandler();
@@ -29,7 +35,7 @@ public class JavaCommentStateProcessor {
         slash.addRule(new CustomStateHandler.Rule('/', single, State.COMMENT));
         slash.addRule(new CustomStateHandler.Rule('*', multi, State.COMMENT));
         slash.addRule(new CustomStateHandler.Rule(null, text, State.TEXT));
-        slash.setPrintCustomChar('/', true);
+        slash.printCustomChar('/', true);
 
         single.addRule(new CustomStateHandler.Rule('\n', text, State.TEXT));
         single.addRule(new CustomStateHandler.Rule(null, null, State.COMMENT));
@@ -41,11 +47,7 @@ public class JavaCommentStateProcessor {
         aster.addRule(new CustomStateHandler.Rule(null, multi, State.COMMENT));
         aster.includeLastChar(false);
 
-        handler = text;
-    }
-
-    public void processSymbol(char c) {
-        handler = handler.execute(c);
+        return text;
     }
 
 }

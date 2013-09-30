@@ -10,7 +10,7 @@ public class CustomStateHandler extends AbstractStateHandler {
     private boolean printCustomChar = false;
     private char customChar;
 
-    public void setPrintCustomChar(char customChar, boolean printCustomChar) {
+    public void printCustomChar(char customChar, boolean printCustomChar) {
         this.printCustomChar = printCustomChar;
         this.customChar = customChar;
     }

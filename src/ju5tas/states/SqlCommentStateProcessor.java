@@ -3,11 +3,10 @@ package ju5tas.states;
 import ju5tas.states.handlers.CustomStateHandler;
 import ju5tas.states.handlers.StateHandler;
 
-public class SqlCommentStateProcessor {
+public class SqlCommentStateProcessor extends StateProcessor {
 
-    private StateHandler handler;
-
-    public SqlCommentStateProcessor() {
+    @Override
+    public StateHandler configure() {
         CustomStateHandler text = new CustomStateHandler();
         CustomStateHandler minus = new CustomStateHandler();
         CustomStateHandler comment = new CustomStateHandler();
@@ -17,16 +16,12 @@ public class SqlCommentStateProcessor {
 
         minus.addRule(new CustomStateHandler.Rule('-', comment, State.COMMENT));
         minus.addRule(new CustomStateHandler.Rule(null, text, State.TEXT));
-        minus.setPrintCustomChar('-', true);
+        minus.printCustomChar('-', true);
 
         comment.addRule(new CustomStateHandler.Rule('\n', text, State.TEXT));
         comment.addRule(new CustomStateHandler.Rule(null, null, State.COMMENT));
 
-        handler = text;
-    }
-
-    public void processSymbol(char c) {
-        handler = handler.execute(c);
+        return text;
     }
 
 }
