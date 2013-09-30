@@ -47,9 +47,4 @@ public abstract class AbstractStateHandler implements StateHandler {
         this.state = state;
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() + " " + state.toString();
-    }
-
 }

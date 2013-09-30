@@ -8,6 +8,16 @@ public class ThreeWayStateHandler extends AbstractStateHandler {
     protected StateHandler thirdWay = this;
     protected State thirdState;
     protected char secondSymbol;
+    private boolean printCustomChar = false;
+    private char customChar;
+
+    public void setCustomChar(char customChar) {
+        this.customChar = customChar;
+    }
+
+    public void setPrintCustomChar(boolean printCustomChar) {
+        this.printCustomChar = printCustomChar;
+    }
 
     public void setThirdWay(StateHandler thirdWay) {
         this.thirdWay = thirdWay;
@@ -30,7 +40,7 @@ public class ThreeWayStateHandler extends AbstractStateHandler {
             changeState(secondState, c);
             return secondWay;
         } else {
-            //System.out.print("/");
+            if (printCustomChar) System.out.print(customChar);
             changeState(thirdState, c);
             return thirdWay;
         }

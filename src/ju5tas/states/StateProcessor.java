@@ -8,32 +8,37 @@ public class StateProcessor {
 
     private StateHandler handler;
 
-    {
-//        TwoWayStateHandler      text            = new TwoWayStateHandler();
+    public StateProcessor(boolean quotesSupport) {
+        StateHandler text;
         TwoWayStateHandler singleComment = new TwoWayStateHandler();
         TwoWayStateHandler multiComment = new TwoWayStateHandler();
         TwoWayStateHandler asterisk = new TwoWayStateHandler();
         ThreeWayStateHandler slash = new ThreeWayStateHandler();
 
-        ThreeWayStateHandler text = new ThreeWayStateHandler();
-        TwoWayStateHandler quotes = new TwoWayStateHandler();
+        if (quotesSupport) {
+            ThreeWayStateHandler textHandler = new ThreeWayStateHandler();
+            text = textHandler;
+            TwoWayStateHandler quotes = new TwoWayStateHandler();
+            textHandler.setFirstSymbol('"');
+            textHandler.setFirstWay(quotes);
+            textHandler.setFirstState(State.TEXT);
+            textHandler.setSecondSymbol('/');
+            textHandler.setSecondWay(slash);
+            textHandler.setSecondState(State.COMMENT);
+            textHandler.setThirdState(State.TEXT);
 
-        text.setFirstSymbol('"');
-        text.setFirstWay(quotes);
-        text.setFirstState(State.TEXT);
-        text.setSecondSymbol('/');
-        text.setSecondWay(slash);
-        text.setSecondState(State.COMMENT);
-        text.setThirdState(State.TEXT);
-
-        quotes.setFirstSymbol('"');
-        quotes.setFirstWay(text);
-        quotes.setFirstState(State.TEXT);
-        quotes.setSecondState(State.TEXT);
-//        text.setFirstSymbol('/');
-//        text.setFirstWay(slash);
-//        text.setFirstState(State.COMMENT);
-//        text.setSecondState(State.TEXT);
+            quotes.setFirstSymbol('"');
+            quotes.setFirstWay(textHandler);
+            quotes.setFirstState(State.TEXT);
+            quotes.setSecondState(State.TEXT);
+        } else {
+            TwoWayStateHandler textHandler = new TwoWayStateHandler();
+            text = textHandler;
+            textHandler.setFirstSymbol('/');
+            textHandler.setFirstWay(slash);
+            textHandler.setFirstState(State.COMMENT);
+            textHandler.setSecondState(State.TEXT);
+        }
 
         slash.setFirstSymbol('/');
         slash.setFirstWay(singleComment);
@@ -43,6 +48,8 @@ public class StateProcessor {
         slash.setSecondState(State.COMMENT);
         slash.setThirdWay(text);
         slash.setThirdState(State.TEXT);
+        slash.setCustomChar('/');
+        slash.setPrintCustomChar(true);
 
         singleComment.setFirstSymbol('\n');
         singleComment.setFirstWay(text);
