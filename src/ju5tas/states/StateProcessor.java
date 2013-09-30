@@ -9,6 +9,7 @@ public class StateProcessor {
     private StateHandler handler;
 
     public StateProcessor(boolean quotesSupport) {
+
         StateHandler text;
         TwoWayStateHandler singleComment = new TwoWayStateHandler();
         TwoWayStateHandler multiComment = new TwoWayStateHandler();
@@ -25,19 +26,19 @@ public class StateProcessor {
             textHandler.setSecondSymbol('/');
             textHandler.setSecondWay(slash);
             textHandler.setSecondState(State.COMMENT);
-            textHandler.setThirdState(State.TEXT);
+            textHandler.setElseState(State.TEXT);
 
             quotes.setFirstSymbol('"');
             quotes.setFirstWay(textHandler);
             quotes.setFirstState(State.TEXT);
-            quotes.setSecondState(State.TEXT);
+            quotes.setElseState(State.TEXT);
         } else {
             TwoWayStateHandler textHandler = new TwoWayStateHandler();
             text = textHandler;
             textHandler.setFirstSymbol('/');
             textHandler.setFirstWay(slash);
             textHandler.setFirstState(State.COMMENT);
-            textHandler.setSecondState(State.TEXT);
+            textHandler.setElseState(State.TEXT);
         }
 
         slash.setFirstSymbol('/');
@@ -46,28 +47,27 @@ public class StateProcessor {
         slash.setSecondSymbol('*');
         slash.setSecondWay(multiComment);
         slash.setSecondState(State.COMMENT);
-        slash.setThirdWay(text);
-        slash.setThirdState(State.TEXT);
+        slash.setElseWay(text);
+        slash.setElseState(State.TEXT);
         slash.setCustomChar('/');
         slash.setPrintCustomChar(true);
 
         singleComment.setFirstSymbol('\n');
         singleComment.setFirstWay(text);
         singleComment.setFirstState(State.TEXT);
-        singleComment.setSecondState(State.COMMENT);
+        singleComment.setElseState(State.COMMENT);
 
         multiComment.setFirstSymbol('*');
         multiComment.setFirstWay(asterisk);
         multiComment.setFirstState(State.COMMENT);
-        multiComment.setSecondState(State.COMMENT);
+        multiComment.setElseState(State.COMMENT);
 
         asterisk.setFirstSymbol('/');
         asterisk.setFirstWay(text);
         asterisk.setFirstState(State.TEXT);
-        asterisk.setSecondWay(multiComment);
-        asterisk.setSecondState(State.COMMENT);
+        asterisk.setElseWay(multiComment);
+        asterisk.setElseState(State.COMMENT);
         asterisk.setIncludeLastChar(false);
-
 
         handler = text;
     }

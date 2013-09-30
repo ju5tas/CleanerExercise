@@ -7,8 +7,8 @@ public abstract class AbstractStateHandler implements StateHandler {
     protected State state = State.TEXT;
     protected StateHandler firstWay = this;
     protected State firstState;
-    protected StateHandler secondWay = this;
-    protected State secondState;
+    protected StateHandler elseWay = this;
+    protected State elseState;
     protected char firstSymbol;
     private boolean includeChar = true;
 
@@ -26,16 +26,16 @@ public abstract class AbstractStateHandler implements StateHandler {
         this.firstState = firstState;
     }
 
-    public void setSecondState(State secondState) {
-        this.secondState = secondState;
+    public void setElseState(State elseState) {
+        this.elseState = elseState;
     }
 
     public void setFirstWay(StateHandler firstWay) {
         this.firstWay = firstWay;
     }
 
-    public void setSecondWay(StateHandler secondWay) {
-        this.secondWay = secondWay;
+    public void setElseWay(StateHandler elseWay) {
+        this.elseWay = elseWay;
     }
 
     public void setFirstSymbol(char firstSymbol) {

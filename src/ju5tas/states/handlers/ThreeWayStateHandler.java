@@ -5,8 +5,8 @@ import ju5tas.states.State;
 
 public class ThreeWayStateHandler extends AbstractStateHandler {
 
-    protected StateHandler thirdWay = this;
-    protected State thirdState;
+    protected StateHandler secondWay = this;
+    protected State secondState;
     protected char secondSymbol;
     private boolean printCustomChar = false;
     private char customChar;
@@ -19,16 +19,16 @@ public class ThreeWayStateHandler extends AbstractStateHandler {
         this.printCustomChar = printCustomChar;
     }
 
-    public void setThirdWay(StateHandler thirdWay) {
-        this.thirdWay = thirdWay;
+    public void setSecondWay(StateHandler secondWay) {
+        this.secondWay = secondWay;
     }
 
     public void setSecondSymbol(char secondSymbol) {
         this.secondSymbol = secondSymbol;
     }
 
-    public void setThirdState(State thirdState) {
-        this.thirdState = thirdState;
+    public void setSecondState(State secondState) {
+        this.secondState = secondState;
     }
 
     @Override
@@ -41,8 +41,8 @@ public class ThreeWayStateHandler extends AbstractStateHandler {
             return secondWay;
         } else {
             if (printCustomChar) System.out.print(customChar);
-            changeState(thirdState, c);
-            return thirdWay;
+            changeState(elseState, c);
+            return elseWay;
         }
     }
 

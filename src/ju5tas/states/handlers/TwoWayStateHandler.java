@@ -8,8 +8,8 @@ public class TwoWayStateHandler extends AbstractStateHandler {
             changeState(firstState, c);
             return firstWay;
         } else {
-            changeState(secondState, c);
-            return secondWay;
+            changeState(elseState, c);
+            return elseWay;
         }
     }
 
