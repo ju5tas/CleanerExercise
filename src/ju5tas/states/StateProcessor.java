@@ -6,15 +6,11 @@ public abstract class StateProcessor {
 
     private StateHandler handler;
 
-    public StateProcessor() {
-        handler = configure();
-    }
-
     protected void setHandler(StateHandler handler) {
         this.handler = handler;
     }
 
-    protected abstract StateHandler configure();
+    protected abstract void configure();
 
     public void processSymbol(char c) {
         handler = handler.execute(c);

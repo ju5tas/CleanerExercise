@@ -1,19 +1,18 @@
 package ju5tas.states;
 
 import ju5tas.states.handlers.CustomStateHandler;
-import ju5tas.states.handlers.StateHandler;
 
 public class JavaCommentStateProcessor extends StateProcessor {
 
     private boolean quoteSupport;
 
     public JavaCommentStateProcessor(boolean quoteSupport) {
-        super();
         this.quoteSupport = quoteSupport;
+        configure();
     }
 
     @Override
-    public StateHandler configure() {
+    public void configure() {
         CustomStateHandler text = new CustomStateHandler();
         CustomStateHandler multi = new CustomStateHandler();
         CustomStateHandler aster = new CustomStateHandler();
@@ -47,7 +46,7 @@ public class JavaCommentStateProcessor extends StateProcessor {
         aster.addRule(new CustomStateHandler.Rule(null, multi, State.COMMENT));
         aster.includeLastChar(false);
 
-        return text;
+        setHandler(text);
     }
 
 }

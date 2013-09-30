@@ -54,5 +54,4 @@ public class CustomStateHandler extends AbstractStateHandler {
         rules.add(rule);
     }
 
-
 }

@@ -1,12 +1,15 @@
 package ju5tas.states;
 
 import ju5tas.states.handlers.CustomStateHandler;
-import ju5tas.states.handlers.StateHandler;
 
 public class SqlCommentStateProcessor extends StateProcessor {
 
+    public SqlCommentStateProcessor() {
+        configure();
+    }
+
     @Override
-    public StateHandler configure() {
+    public void configure() {
         CustomStateHandler text = new CustomStateHandler();
         CustomStateHandler minus = new CustomStateHandler();
         CustomStateHandler comment = new CustomStateHandler();
@@ -21,7 +24,7 @@ public class SqlCommentStateProcessor extends StateProcessor {
         comment.addRule(new CustomStateHandler.Rule('\n', text, State.TEXT));
         comment.addRule(new CustomStateHandler.Rule(null, null, State.COMMENT));
 
-        return text;
+        setHandler(text);
     }
 
 }
