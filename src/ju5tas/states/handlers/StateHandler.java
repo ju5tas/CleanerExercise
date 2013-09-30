@@ -1,10 +1,10 @@
 package ju5tas.states.handlers;
 
-import ju5tas.states.DoubleState;
+import ju5tas.states.State;
 
 public interface StateHandler {
 
-    DoubleState getState();
+    void setState(State state);
 
     StateHandler execute(char c);
 
