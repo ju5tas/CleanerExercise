@@ -4,4 +4,8 @@ public interface StateHandler {
 
     StateHandler execute(char c);
 
+    void setName(String name);
+
+    String getName();
+
 }

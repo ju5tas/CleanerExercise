@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<handlers>
+    <handler name="text" main="true">
+        <rule symbol="/" link="slash" state="COMMENT"/>
+        <rule symbol="" link="" state="TEXT"/>
+    </handler>
+    <handler name="slash" charAfter="/">
+        <rule symbol="/" link="single" state="COMMENT"/>
+        <rule symbol="*" link="multi" state="COMMENT"/>
+        <rule symbol="" link="text" state="TEXT"/>
+    </handler>
+    <handler name="single">
+        <rule symbol="\n" link="text" state="TEXT"/>
+        <rule symbol="" link="" state="COMMENT"/>
+    </handler>
+    <handler name="multi">
+        <rule symbol="*" link="aster" state="COMMENT"/>
+        <rule symbol="" link="" state="COMMENT"/>
+    </handler>
+    <handler name="aster" includeLast="false">
+        <rule symbol="/" link="text" state="TEXT"/>
+        <rule symbol="" link="multi" state="COMMENT"/>
+    </handler>
+</handlers>

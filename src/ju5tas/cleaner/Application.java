@@ -1,7 +1,8 @@
 package ju5tas.cleaner;
 
 import ju5tas.states.JavaCommentStateProcessor;
-import ju5tas.states.SqlCommentStateProcessor;
+import ju5tas.states.StateProcessor;
+import ju5tas.states.XmlStateProcessor;
 
 public class Application {
 
@@ -19,34 +20,24 @@ public class Application {
                 "   int a = 6 / 3 * 2; \n" +
                 "} }// a = 4";
 
-        String sqlText = "select *\n" +
-                "from SystemUser -- user information where [login] = 'spanov'\n" +
-                "where department <> -1 -- -1 - unknown";
-
         System.out.println("---ORIGINAL JAVA TEXT---\n");
         System.out.println(javaText);
-        System.out.println("\n---QUOTE SUPPORT ON---\n");
+        System.out.println("\n---XML CONFIG---\n");
+        cleanJava2(javaText);
+        System.out.println("\n\n---CONSTRUCTOR CONFIG---\n");
         cleanJava(javaText, true);
-        System.out.println("\n\n---QUOTE SUPPORT OFF--\n");
-        cleanJava(javaText, false);
-
-        System.out.println("\n\n---ORIGINAL SQL TEXT---\n");
-        System.out.println(sqlText);
-        System.out.println("\n\n---SQL CLEANED---\n");
-        cleanSql(sqlText);
-
     }
 
     public static void cleanJava(String str, boolean quoteSupport) {
-        JavaCommentStateProcessor processor = new JavaCommentStateProcessor(quoteSupport);
+        StateProcessor processor = new JavaCommentStateProcessor(quoteSupport);
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
             processor.processSymbol(c);
         }
     }
 
-    public static void cleanSql(String str) {
-        SqlCommentStateProcessor processor = new SqlCommentStateProcessor();
+    public static void cleanJava2(String str) {
+        StateProcessor processor = new XmlStateProcessor("conf.xml");
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
             processor.processSymbol(c);

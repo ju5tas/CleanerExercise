@@ -44,7 +44,7 @@ public class JavaCommentStateProcessor extends StateProcessor {
 
         aster.addRule(new CustomStateHandler.Rule('/', text, State.TEXT));
         aster.addRule(new CustomStateHandler.Rule(null, multi, State.COMMENT));
-        aster.includeLastChar(false);
+        aster.includeEndChar(false);
 
         setHandler(text);
     }

@@ -5,15 +5,25 @@ import ju5tas.states.State;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomStateHandler extends AbstractStateHandler {
+public class CustomStateHandler implements StateHandler {
 
-    private boolean printCustomChar = false;
-    private char customChar;
+    public static class Rule {
+        public Rule(Character symbol, StateHandler handler, State state) {
+            this.state = state;
+            this.handler = handler;
+            this.symbol = symbol;
+        }
 
-    public void printCustomChar(char customChar, boolean printCustomChar) {
-        this.printCustomChar = printCustomChar;
-        this.customChar = customChar;
+        public State state;
+        public StateHandler handler;
+        public Character symbol;
     }
+
+    private String name;
+    private boolean printCustomChar = false;
+    private boolean includeEndChar = true;
+    private char customChar;
+    protected State state = State.TEXT;
 
     @Override
     public StateHandler execute(char c) {
@@ -29,29 +39,46 @@ public class CustomStateHandler extends AbstractStateHandler {
             }
         }
         if (defaultRule == null)
-            throw new RuntimeException("Не задан обработчик по-умолчанию: new CustomStateHandler.Rule(null, handler, state)");
+            throw new RuntimeException("Не задано правило по-умолчанию: new CustomStateHandler.Rule(null, handler, state) для обрабочика " + getName());
         if (printCustomChar) System.out.print(customChar);
         changeState(defaultRule.state, c);
         return (defaultRule.handler == null ? this : defaultRule.handler);
     }
 
-    public static class Rule {
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public Rule(Character symbol, StateHandler handler, State state) {
-            this.state = state;
-            this.handler = handler;
-            this.symbol = symbol;
-        }
-
-        public State state;
-        public StateHandler handler;
-        public Character symbol;
+    @Override
+    public String getName() {
+        return name;
     }
 
     public List<Rule> rules = new ArrayList<>();
 
     public void addRule(Rule rule) {
         rules.add(rule);
+    }
+
+    protected void changeState(State st, char c) {
+        if (st == null) throw new RuntimeException("State не может быть null");
+        this.setState(st);
+        boolean needPrint = state == State.TEXT && includeEndChar;
+        if (needPrint) System.out.print(c);
+    }
+
+    public void includeEndChar(boolean includeChar) {
+        this.includeEndChar = includeChar;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public void printCustomChar(char customChar, boolean printCustomChar) {
+        this.printCustomChar = printCustomChar;
+        this.customChar = customChar;
     }
 
 }
